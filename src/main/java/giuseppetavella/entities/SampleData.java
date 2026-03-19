@@ -35,12 +35,14 @@ public class SampleData {
         Order order2 = new Order(2, customer1, OrderStatus.SHIPPED);
         Order order3 = new Order(3, customer3, OrderStatus.SHIPPED);
         Order order4 = new Order(4, customer4, OrderStatus.SHIPPED);
+        Order order5 = new Order(5, customer4, OrderStatus.SHIPPED);
 
         // ***** EDIT ENTITY RELATIONSHIPS
         order1.addProduct(product4);
         order1.addProduct(product3);
         order2.addProduct(product3);
         order2.addProduct(product4);
+        order4.addProduct(product4);
 
         // products
         List<Product> products = List.of(
@@ -64,7 +66,8 @@ public class SampleData {
                 order1,
                 order2,
                 order3,
-                order4
+                order4,
+                order5
         );
 
         return Map.of(
