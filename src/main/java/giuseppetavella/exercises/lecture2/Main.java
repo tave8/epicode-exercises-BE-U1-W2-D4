@@ -4,6 +4,7 @@ import giuseppetavella.entities.Customer;
 import giuseppetavella.entities.Order;
 import giuseppetavella.entities.Product;
 import giuseppetavella.entities.SampleData;
+import giuseppetavella.enums.ProductCategory;
 
 import java.util.Comparator;
 import java.util.List;
@@ -27,6 +28,9 @@ public class Main {
         List<Product> mostExpensiveProducts = getMostExpensiveProducts(products); 
         // exercise 4
         Map<String, Double> averageTotalByOrder = getAverageTotalByOrder(orders);
+        // exercise 5
+        Map<ProductCategory, Double> totalByProductCategory = getTotalByProductCategory(products);
+        
         
         System.out.println();
         System.out.println("-----------");
@@ -64,6 +68,34 @@ public class Main {
             System.out.println(msg);
         });
 
+        System.out.println();
+        System.out.println("----------");
+        System.out.println("TOTAL BY PRODUCT CATEGORY");
+        System.out.println("-----------");
+        totalByProductCategory.forEach((productCategory, totalByCategory) -> {
+            String msg = productCategory + ": "  +totalByCategory;
+            System.out.println(msg);
+        });
+
+    }
+
+
+    /**
+     * Exercise 5
+     */
+    static Map<ProductCategory, Double> getTotalByProductCategory(List<Product> products) {
+        //  1 product has 1 product category
+        //  1 product category has N products
+        //  group by product category
+        //  for each product category, sum the price of the product
+        return products.stream()
+                .collect(
+                        Collectors.groupingBy(
+                            Product::getCategory,
+                            Collectors.summingDouble(Product::getPrice)    
+                        )
+                );
+           
     }
 
 
