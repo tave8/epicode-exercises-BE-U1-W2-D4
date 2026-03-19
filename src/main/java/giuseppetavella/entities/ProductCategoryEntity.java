@@ -20,6 +20,9 @@ public class ProductCategoryEntity {
 
     // TODO 2026-03-19: when I'm not interested in a type, I can mark it as ?
     public static Set<ProductCategory> getMissingProductCategoriesFromMap(Map<ProductCategory, ?> sourceMap) {
+        // Category<ProductCategory, ?> cat = new Category<>();
+        // return Collections.singleton(cat.getMissingFromMap((Map<ProductCategory, ?>) sourceMap.keySet()));
+        
         return getMissingProductCategoriesFrom(sourceMap.keySet());
     }
     
