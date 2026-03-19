@@ -94,8 +94,7 @@ public class Main {
                         )
                 );
         
-        Set<ProductCategory> existingProductCategories = outputMap.keySet();
-        List<ProductCategory> missingProductCategories = ProductCategoryEntity.getMissingProductCategoriesFrom(existingProductCategories);        
+        List<ProductCategory> missingProductCategories = ProductCategoryEntity.getMissingProductCategoriesFromMap(outputMap);        
         
         // System.out.println(missingProductCategories);
         // "append" these product categories to the output map, defaulting them to 0

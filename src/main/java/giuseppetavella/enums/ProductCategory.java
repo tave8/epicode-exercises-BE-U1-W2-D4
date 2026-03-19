@@ -4,5 +4,6 @@ public enum ProductCategory {
     BABY,
     BOY,
     GIRL,
-    BOOK
+    BOOK,
+    UNDERWEAR
 }

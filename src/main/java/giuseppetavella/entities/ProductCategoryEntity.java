@@ -4,6 +4,7 @@ import giuseppetavella.enums.ProductCategory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public class ProductCategoryEntity {
@@ -19,4 +20,11 @@ public class ProductCategoryEntity {
         }
         return ret;
     }
+
+    // TODO: when I'm not interested in a type, I can mark it as ?
+    public static List<ProductCategory> getMissingProductCategoriesFromMap(Map<ProductCategory, ?> sourceMap) {
+        Set<ProductCategory> keys = sourceMap.keySet();
+        return getMissingProductCategoriesFrom(keys);
+    }
+    
 }
