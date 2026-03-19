@@ -7,7 +7,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class Main {
@@ -94,7 +93,7 @@ public class Main {
                         )
                 );
         
-        List<ProductCategory> missingProductCategories = ProductCategoryEntity.getMissingProductCategoriesFromMap(outputMap);        
+        Set<ProductCategory> missingProductCategories = ProductCategoryEntity.getMissingProductCategoriesFromMap(outputMap);        
         
         // System.out.println(missingProductCategories);
         // "append" these product categories to the output map, defaulting them to 0
