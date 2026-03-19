@@ -1,14 +1,12 @@
 package giuseppetavella.exercises.lecture2;
 
-import giuseppetavella.entities.Customer;
-import giuseppetavella.entities.Order;
-import giuseppetavella.entities.Product;
-import giuseppetavella.entities.SampleData;
+import giuseppetavella.entities.*;
 import giuseppetavella.enums.ProductCategory;
 
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -88,14 +86,24 @@ public class Main {
         //  1 product category has N products
         //  group by product category
         //  for each product category, sum the price of the product
-        return products.stream()
+        Map<ProductCategory, Double> outputMap = products.stream()
                 .collect(
                         Collectors.groupingBy(
                             Product::getCategory,
                             Collectors.summingDouble(Product::getPrice)    
                         )
                 );
-           
+        
+        Set<ProductCategory> existingProductCategories = outputMap.keySet();
+        List<ProductCategory> missingProductCategories = ProductCategoryEntity.getMissingProductCategoriesFrom(existingProductCategories);        
+        
+        // System.out.println(missingProductCategories);
+        // "append" these product categories to the output map, defaulting them to 0
+        for(ProductCategory missingProductCategory : missingProductCategories) {
+            outputMap.put(missingProductCategory, 0.0);
+        }
+        
+        return outputMap;
     }
 
 
