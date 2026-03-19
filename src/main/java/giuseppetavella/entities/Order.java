@@ -5,6 +5,7 @@ import giuseppetavella.enums.OrderStatus;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 public class Order {
@@ -72,8 +73,21 @@ public class Order {
         this.getProducts().add(product);
     }
     
-    public double calculateTotal() {
-        return this.getProducts().stream().collect(Collectors.summingDouble(product -> product.getPrice()));
+    public double calculateTotalProductsPrice() {
+        return this.getProducts().stream().collect(Collectors.summingDouble(Product::getPrice));
+    }
+    
+    public double calculateAverageProductsPrice() {
+        return this.getProducts().stream().collect(Collectors.averagingDouble(Product::getPrice));
+    }
+
+    /**
+     * returns something like:
+     *    order (ID:5)
+     * Useful as key in grouping by operations.
+     */
+    public String getUniqueLabel() {
+        return "order (ID:" + this.getId()+")";
     }
 
     @Override

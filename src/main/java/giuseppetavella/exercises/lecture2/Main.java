@@ -25,7 +25,9 @@ public class Main {
         Map<String, Double> totalOrderSalesByCustomer = getTotalOrderSalesByCustomer(orders);
         // exercise 3
         List<Product> mostExpensiveProducts = getMostExpensiveProducts(products); 
-
+        // exercise 4
+        Map<String, Double> averageTotalByOrder = getAverageTotalByOrder(orders);
+        
         System.out.println();
         System.out.println("-----------");
         System.out.println("ORDERS LIST BY CUSTOMER");
@@ -53,6 +55,32 @@ public class Main {
             System.out.println(msg);
         });
 
+        System.out.println();
+        System.out.println("----------");
+        System.out.println("AVERAGE TOTAL BY ORDER");
+        System.out.println("-----------");
+        averageTotalByOrder.forEach((uniqueOrderLabel, totalOrder) -> {
+            String msg = uniqueOrderLabel + ": "  +totalOrder;
+            System.out.println(msg);
+        });
+
+    }
+
+
+    /**
+     * Exercise 4
+     */
+    static Map<String, Double> getAverageTotalByOrder(List<Order> orders) {
+        // 1 order -> N products
+        // each order has many products
+        // each order has the total average of its products
+        return orders.stream()
+                .collect(
+                        Collectors.groupingBy(
+                                Order::getUniqueLabel,
+                                Collectors.averagingDouble(Order::calculateAverageProductsPrice)
+                        )
+                );
     }
 
     /**
@@ -88,7 +116,7 @@ public class Main {
                 .collect(
                         Collectors.groupingBy(
                                 order -> order.getCustomer().getUniqueLabel(),
-                                Collectors.summingDouble(order -> order.calculateTotal())
+                                Collectors.summingDouble(order -> order.calculateTotalProductsPrice())
                         )
                 );
     }

@@ -43,6 +43,8 @@ public class SampleData {
         order2.addProduct(product3);
         order2.addProduct(product4);
         order4.addProduct(product4);
+        order5.addProduct(product5);
+        order5.addProduct(product3);
 
         // products
         List<Product> products = List.of(
