@@ -111,7 +111,7 @@ public class Main {
     static Map<String, Double> getAverageTotalByOrder(List<Order> orders) {
         // 1 order -> N products
         // each order has many products
-        // each order has the total average of its products
+        // each order has the total average of the prices of its products
         return orders.stream()
                 .collect(
                         Collectors.groupingBy(
@@ -154,7 +154,7 @@ public class Main {
                 .collect(
                         Collectors.groupingBy(
                                 order -> order.getCustomer().getUniqueLabel(),
-                                Collectors.summingDouble(order -> order.calculateTotalProductsPrice())
+                                Collectors.summingDouble(Order::calculateTotalProductsPrice)
                         )
                 );
     }
@@ -164,7 +164,11 @@ public class Main {
      */
     static Map<String, List<Order>> getOrdersByCustomer(List<Order> orders) {
         return orders.stream()
-                .collect(Collectors.groupingBy(order -> order.getCustomer().getUniqueLabel()));
+                .collect(
+                        Collectors.groupingBy(
+                                order -> order.getCustomer().getUniqueLabel()
+                        )
+                );
     }
     
 }
