@@ -5,6 +5,7 @@ import giuseppetavella.entities.Order;
 import giuseppetavella.entities.Product;
 import giuseppetavella.entities.SampleData;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -22,6 +23,8 @@ public class Main {
         Map<String, List<Order>> ordersByCustomer = getOrdersByCustomer(orders);
         // exercise 2
         Map<String, Double> totalOrderSalesByCustomer = getTotalOrderSalesByCustomer(orders);
+        // exercise 3
+        List<Product> mostExpensiveProducts = getMostExpensiveProducts(products); 
 
         System.out.println();
         System.out.println("-----------");
@@ -41,13 +44,40 @@ public class Main {
             System.out.println(msg);
         });
 
+        System.out.println();
+        System.out.println("----------");
+        System.out.println("MOST EXPENSIVE PRODUCTS");
+        System.out.println("-----------");
+        mostExpensiveProducts.forEach((expensiveProduct) -> {
+            String msg = expensiveProduct.toString();
+            System.out.println(msg);
+        });
+
+    }
+
+    /**
+     * Exercise 3
+     */
+    static List<Product> getMostExpensiveProducts(List<Product> products, int limit) throws IllegalArgumentException {
+        // most expensive products means:
+        // order by price, descending
+        // limit x products
+        if(limit < 0) {
+            throw new IllegalArgumentException("Limit " + limit + " is illegal.");
+        }
+        return products.stream()
+                .sorted(Comparator.comparing(Product::getPrice).reversed())
+                .limit(limit)
+                .toList();
     }
     
-    static Map<String, List<Order>> getOrdersByCustomer(List<Order> orders) {
-        return orders.stream()
-                .collect(Collectors.groupingBy(order -> order.getCustomer().getUniqueLabel()));
+    static List<Product> getMostExpensiveProducts(List<Product> products) throws IllegalArgumentException {
+        return getMostExpensiveProducts(products, 5);
     }
-    
+
+    /**
+     * Exercise 2
+     */
     static Map<String, Double> getTotalOrderSalesByCustomer(List<Order> orders) {
         //  1 customer -> N orders
         //  N orders <-> N products
@@ -61,6 +91,14 @@ public class Main {
                                 Collectors.summingDouble(order -> order.calculateTotal())
                         )
                 );
+    }
+
+    /**
+     * Exercise 1
+     */
+    static Map<String, List<Order>> getOrdersByCustomer(List<Order> orders) {
+        return orders.stream()
+                .collect(Collectors.groupingBy(order -> order.getCustomer().getUniqueLabel()));
     }
     
 }
